@@ -32,10 +32,12 @@ a { color: inherit; }
 /* NAV */
 .nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 40; background: var(--panel); }
 .nav-inner { display: flex; align-items: stretch; justify-content: space-between; max-width: 1140px; margin: 0 auto; height: 78px; padding-left: 24px; }
-.brand { display: flex; align-items: center; gap: 16px; text-decoration: none; }
-.logo-block { width: 80px; height: 78px; background: var(--accent); display: grid; place-items: center; }
-.logo-block svg { width: 40px; height: 40px; }
-.brand-name { font-weight: 700; font-size: 22px; letter-spacing: .5px; }
+.brand { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+.logo-block {
+  width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center;
+  background: linear-gradient(135deg, var(--accent), #8be7c8); box-shadow: 0 8px 20px rgba(94, 232, 173, 0.28);
+}
+.logo-block svg { width: 38px; height: 38px; }
 .nav-links { display: flex; align-items: center; gap: 36px; list-style: none; margin: 0; padding: 0; }
 .nav-links a { text-decoration: none; font-size: 14px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; color: var(--text); }
 .nav-links a:hover { color: var(--accent); }
@@ -163,11 +165,12 @@ footer a { color: var(--accent); text-decoration: none; }
 
 <nav class="nav">
   <div class="nav-inner">
-    <a class="brand" href="#top">
+    <a class="brand" href="#top" aria-label="Home">
       <div class="logo-block" aria-hidden="true">
-        <svg viewBox="0 0 40 40"><path d="M4 36 L16 4 L20 4 L8 36 Z M18 36 L30 4 L34 4 L22 36 Z" fill="#0b0f16"/></svg>
+        <svg viewBox="0 0 52 52" aria-hidden="true">
+          <text x="26" y="36" text-anchor="middle" font-family="Arial, sans-serif" font-size="26" font-weight="800" letter-spacing="-2" fill="#0b0f16">JR</text>
+        </svg>
       </div>
-      <span class="brand-name" id="brandName">Jhay Jhay Ranes</span>
     </a>
     <ul class="nav-links">
       <li><a href="#top">Home</a></li>
@@ -383,10 +386,9 @@ $("photoImg").addEventListener("error", () => {
 $("menuBtn").addEventListener("click", () => $("mobileMenu").classList.toggle("open"));
 document.querySelectorAll("#mobileMenu a").forEach(a => a.addEventListener("click", () => $("mobileMenu").classList.remove("open")));
 
-// Keep initials and brand name in sync with the hero name
+// Keep the initials in sync with the hero name, while leaving the navbar logo text fixed.
 function syncName() {
   const txt = $("greet").textContent.replace(/^hi,?\s*(i'?m\s*)?/i, "").replace(/!$/, "").trim() || "Your Name";
-  $("brandName").textContent = txt.toUpperCase();
   const parts = txt.split(/\s+/).filter(Boolean);
   $("initials").textContent = parts.slice(0, 2).map(w => w[0].toUpperCase()).join("") || "?";
 }
