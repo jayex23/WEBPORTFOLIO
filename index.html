@@ -142,6 +142,12 @@ section.projects { padding: 80px 0; background: var(--section-gradient); }
 .project-caption { min-height: 72px; padding: 16px 4px; }
 .project-caption h3 { margin: 0 0 4px; color: var(--warm-accent-strong); font-size: 18px; }
 .project-caption p { margin: 0; color: var(--muted); font-size: 14px; }
+.project-link {
+  display: inline-block; margin-top: 12px; padding: 9px 16px; border: 1px solid var(--accent);
+  color: var(--accent); text-decoration: none; font-size: 14px; font-weight: 600;
+}
+.project-link:hover { background: var(--accent); color: var(--accent-text); }
+.project-link[hidden] { display: none; }
 .carousel-header { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 12px; }
 .carousel-btn {
   width: 42px; height: 42px; display: grid; place-items: center; border: 1px solid var(--border);
@@ -164,6 +170,7 @@ footer a { color: var(--accent); text-decoration: none; }
   .hero::before { display: none; }
   .about-grid { grid-template-columns: 1fr; gap: 32px; }
 }
+
 </style>
 </head>
 <body>
@@ -249,6 +256,7 @@ footer a { color: var(--accent); text-decoration: none; }
       <div class="project-caption" aria-live="polite">
         <h3 id="projectTitle"></h3>
         <p id="projectDescription"></p>
+        <a class="project-link" id="projectLink" href="#" target="_blank" rel="noopener noreferrer" hidden>View Project</a>
       </div>
       <div class="carousel-header" aria-label="Project gallery controls">
         <button class="carousel-btn" id="projectPrev" type="button" aria-label="Previous project" aria-controls="projectCarousel" disabled>&lsaquo;</button>
@@ -295,12 +303,14 @@ const projects = [
   {
     title: "PROJECT 1",
     image: "photo/project1.png",
-    description: "AWE BOLTS NEW WEBPAGE"
+    description: "Awe Bolts Entertainment Shop",
+    link: "https://bolts.awsaudi.com/"
   },
   {
     title: "PROJECT 2",
     image: "photo/jhay.png",
-    description: "Streamlining Area Operations with Smart Operator Scheduling – Easily manage staff assignments, break rotations, and reliever coverage with an organized, efficient, and hassle-free scheduling system."
+    description: "Streamlining Area Operations with Smart Operator Scheduling – Easily manage staff assignments, break rotations, and reliever coverage with an organized, efficient, and hassle-free scheduling system.",
+    link: "https://jayex23.github.io/OperatorSystem/"
   },
  
 ];
@@ -318,6 +328,14 @@ function renderProject() {
   $("projectPosition").textContent = hasProject ? `${currentProject + 1} / ${projects.length}` : "";
   $("projectTitle").textContent = project?.title || "";
   $("projectDescription").textContent = project?.description || "";
+  const projectLink = $("projectLink");
+  if (project?.link) {
+    projectLink.href = project.link;
+    projectLink.hidden = false;
+  } else {
+    projectLink.removeAttribute("href");
+    projectLink.hidden = true;
+  }
 
   if (!project) {
     image.hidden = true;
